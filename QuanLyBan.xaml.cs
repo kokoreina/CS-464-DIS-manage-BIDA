@@ -94,23 +94,43 @@ namespace Dash_boardsBIDA
                 if (btn == null) continue;
 
                 string tableName = GetTableName(btn);
+                string type = (btn.Tag == null) ? "Pool" : btn.Tag.ToString();
 
                 bool started, running, paused;
                 TimeSpan playTime;
                 main.GetTableDisplay(tableName, out started, out running, out paused, out playTime);
 
+                // ✅ pending = bàn có phát sinh tiền (món hoặc giờ) nhưng chưa thanh toán/xóa
+                bool pending = main.HasPendingPayment(tableName);
+
+                if (paused) btn.Background = Brushes.Yellow;
+                else if (pending) btn.Background = Brushes.Orange;
+                else btn.Background = Brushes.LightGreen;
+
+                // ✅ luôn giữ POOL/LIBRE trên UI
                 if (!started)
                 {
-                    btn.Content = tableName;
-                    btn.Background = Brushes.LightGreen;
+                    btn.Content = tableName + "\n" + type.ToUpper();
                 }
                 else
                 {
-                    btn.Content = tableName + "\n" + playTime.ToString(@"hh\:mm\:ss");
+                    btn.Content = tableName + "\n" + type.ToUpper() + "\n" + playTime.ToString(@"hh\:mm\:ss");
+                }
 
-                    if (paused) btn.Background = Brushes.Yellow;
-                    else if (running) btn.Background = Brushes.Orange;
-                    else btn.Background = Brushes.LightGreen;
+                // ✅ ưu tiên màu pause trước
+                if (paused)
+                {
+                    btn.Background = Brushes.Yellow;
+                }
+                else if (pending)
+                {
+                    // ✅ đúng yêu cầu: bàn đã chọn/đã có dữ liệu chưa thanh toán => CAM
+                    btn.Background = Brushes.Orange;
+                }
+                else
+                {
+                    // mặc định xanh chuối
+                    btn.Background = Brushes.LightGreen;
                 }
             }
         }
@@ -128,8 +148,10 @@ namespace Dash_boardsBIDA
 
         private string GetTableName(Button btn)
         {
-            if (btn.Content == null) return "Bàn";
-            return btn.Content.ToString().Split('\n')[0]; // lấy dòng đầu
+            if (btn?.Content == null) return "Bàn";
+            return btn.Content.ToString()
+                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0]
+                .Trim();
         }
     }
 }

@@ -110,7 +110,31 @@ namespace Dash_boardsBIDA
         public Employee SelectedEmployee
         {
             get => _selectedEmployee;
-            set { _selectedEmployee = value; OnPropertyChanged(nameof(SelectedEmployee)); RefreshCommands(); }
+            set
+            {
+                _selectedEmployee = value;
+                OnPropertyChanged(nameof(SelectedEmployee));
+
+                // Nếu user click chọn 1 nhân viên có trong danh sách => thoát chế độ thêm mới
+                if (_selectedEmployee != null && Employees.Contains(_selectedEmployee))
+                {
+                    IsAddMode = false;
+                }
+
+                RefreshCommands();
+            }
+        }
+
+        private bool _isAddMode;
+        public bool IsAddMode
+        {
+            get => _isAddMode;
+            set
+            {
+                _isAddMode = value;
+                OnPropertyChanged(nameof(IsAddMode));
+                RefreshCommands();
+            }
         }
 
         private string _searchKeyword;
@@ -128,10 +152,11 @@ namespace Dash_boardsBIDA
         public RelayCommand AddCommand { get; }
         public RelayCommand DeleteCommand { get; }
         public RelayCommand SaveCommand { get; }
+        public RelayCommand CancelAddCommand { get; }   // (tuỳ chọn) nút Hủy
 
         public EmployeeViewModel()
         {
-            // Demo data (bạn có thể thay bằng DB sau)
+            // Demo data
             Employees.Add(new Employee
             {
                 ID = "NV001",
@@ -162,22 +187,29 @@ namespace Dash_boardsBIDA
                 MatKhau = "123456"
             });
 
-            AddCommand = new RelayCommand(AddEmployee);
-            DeleteCommand = new RelayCommand(DeleteEmployee, () => SelectedEmployee != null);
+            AddCommand = new RelayCommand(StartAddEmployee);
+
+            // Không cho xóa khi đang add mode (vì nhân viên nháp chưa nằm trong list)
+            DeleteCommand = new RelayCommand(DeleteEmployee, () => SelectedEmployee != null && !IsAddMode);
+
+            // Save được cả khi add mode và khi sửa nhân viên có sẵn
             SaveCommand = new RelayCommand(SaveEmployee, () => SelectedEmployee != null);
+
+            CancelAddCommand = new RelayCommand(CancelAdd, () => IsAddMode);
 
             ApplyFilter();
             SelectedEmployee = FilteredEmployees.FirstOrDefault();
         }
 
-        private void AddEmployee()
+        // ✅ THAY vì add luôn vào Employees, ta chỉ tạo “nhân viên nháp” để nhập ở form bên phải
+        private void StartAddEmployee()
         {
-            string newId = GenerateNextId();
+            IsAddMode = true;
 
-            var emp = new Employee
+            SelectedEmployee = new Employee
             {
-                ID = newId,
-                TenNV = "Nhân viên mới",
+                ID = GenerateNextId(),
+                TenNV = "",
                 VaiTro = "Nhân viên",
                 TrangThai = "Đang làm",
                 LoaiNV = "Full-time",
@@ -189,18 +221,26 @@ namespace Dash_boardsBIDA
                 MatKhau = ""
             };
 
-            Employees.Add(emp);
+            // KHÔNG gọi ApplyFilter() ở đây vì SelectedEmployee (nháp) không nằm trong list
+            RefreshCommands();
+        }
+
+        private void CancelAdd()
+        {
+            IsAddMode = false;
             ApplyFilter();
-            SelectedEmployee = emp;
+            SelectedEmployee = FilteredEmployees.FirstOrDefault();
         }
 
         private void DeleteEmployee()
         {
             if (SelectedEmployee == null) return;
 
-            var ok = MessageBox.Show($"Xóa nhân viên {SelectedEmployee.ID} - {SelectedEmployee.TenNV} ?",
-                "Xác nhận", MessageBoxButton.OKCancel);
-
+            var ok = MessageBox.Show(
+                $"Xóa nhân viên {SelectedEmployee.ID} - {SelectedEmployee.TenNV} ?",
+                "Xác nhận",
+                MessageBoxButton.OKCancel
+            );
             if (ok != MessageBoxResult.OK) return;
 
             Employees.Remove(SelectedEmployee);
@@ -212,23 +252,41 @@ namespace Dash_boardsBIDA
         {
             if (SelectedEmployee == null) return;
 
-            // Validate đơn giản
+            // Validate cơ bản
             if (string.IsNullOrWhiteSpace(SelectedEmployee.TenNV))
             {
                 MessageBox.Show("Họ tên không được để trống!");
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(SelectedEmployee.SDT))
+            if (!string.IsNullOrWhiteSpace(SelectedEmployee.SDT) &&
+                SelectedEmployee.SDT.Any(ch => !char.IsDigit(ch)))
             {
-                // check phone basic (chỉ số)
-                if (SelectedEmployee.SDT.Any(ch => !char.IsDigit(ch)))
-                {
-                    MessageBox.Show("SĐT chỉ được chứa chữ số!");
-                    return;
-                }
+                MessageBox.Show("SĐT chỉ được chứa chữ số!");
+                return;
             }
 
+            // ✅ Nếu đang ở chế độ thêm mới => giờ mới add vào list
+            if (IsAddMode)
+            {
+                // Check trùng ID (phòng trường hợp hiếm)
+                if (Employees.Any(e => e.ID == SelectedEmployee.ID))
+                {
+                    SelectedEmployee.ID = GenerateNextId();
+                }
+
+                Employees.Add(SelectedEmployee);
+                IsAddMode = false;
+
+                ApplyFilter();
+                // đảm bảo chọn đúng item vừa thêm
+                SelectedEmployee = FilteredEmployees.FirstOrDefault(e => e.ID == Employees.Last().ID);
+
+                MessageBox.Show("Đã thêm nhân viên mới (demo).");
+                return;
+            }
+
+            // ✅ Còn nếu không add mode => coi như lưu sửa nhân viên đang chọn
             MessageBox.Show("Đã lưu thay đổi (demo).");
             ApplyFilter();
         }
@@ -236,32 +294,33 @@ namespace Dash_boardsBIDA
         private void ApplyFilter()
         {
             FilteredEmployees.Clear();
-
             var keyword = (SearchKeyword ?? "").Trim().ToLowerInvariant();
-            var query = Employees.AsEnumerable();
 
+            var query = Employees.AsEnumerable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x =>
                     (x.ID ?? "").ToLowerInvariant().Contains(keyword) ||
                     (x.TenNV ?? "").ToLowerInvariant().Contains(keyword) ||
                     (x.VaiTro ?? "").ToLowerInvariant().Contains(keyword) ||
-                    (x.TrangThai ?? "").ToLowerInvariant().Contains(keyword));
+                    (x.TrangThai ?? "").ToLowerInvariant().Contains(keyword)
+                );
             }
 
-            foreach (var item in query)
-                FilteredEmployees.Add(item);
+            foreach (var item in query) FilteredEmployees.Add(item);
 
-            // nếu selected bị mất do filter
-            if (SelectedEmployee != null && !FilteredEmployees.Contains(SelectedEmployee))
-                SelectedEmployee = FilteredEmployees.FirstOrDefault();
+            // ✅ Quan trọng: nếu đang add mode thì ĐỪNG tự đổi SelectedEmployee (vì SelectedEmployee là “nháp”)
+            if (!IsAddMode)
+            {
+                if (SelectedEmployee != null && !FilteredEmployees.Contains(SelectedEmployee))
+                    SelectedEmployee = FilteredEmployees.FirstOrDefault();
+            }
 
             RefreshCommands();
         }
 
         private string GenerateNextId()
         {
-            // format: NV001
             int max = 0;
             foreach (var e in Employees)
             {
@@ -279,9 +338,11 @@ namespace Dash_boardsBIDA
         {
             DeleteCommand?.RaiseCanExecuteChanged();
             SaveCommand?.RaiseCanExecuteChanged();
+            CancelAddCommand?.RaiseCanExecuteChanged();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string prop) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        protected void OnPropertyChanged(string prop) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

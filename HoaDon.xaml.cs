@@ -34,7 +34,12 @@ namespace Dash_boardsBIDA
             InitializeComponent();
             Loaded += HoaDon_Loaded;
         }
-
+        private void FixDetailFont(TextBlock tb, double size)
+        {
+            if (tb == null) return;
+            tb.FontSize = size;
+            tb.TextWrapping = TextWrapping.Wrap;
+        }
         private void HoaDon_Loaded(object sender, RoutedEventArgs e)
         {
             // map UI by name (nếu XAML bạn đúng tên như mình đưa trước thì sẽ bắt được)
@@ -50,7 +55,11 @@ namespace Dash_boardsBIDA
             _txtInvTimeMoney = FindName("TxtInvTimeMoney") as TextBlock;
             _txtInvFoodMoney = FindName("TxtInvFoodMoney") as TextBlock;
             _txtInvTotal = FindName("TxtInvTotal") as TextBlock;
+            // ✅ Fix font quá to
+            FixDetailFont(_txtInvId, 14);
+            FixDetailFont(_txtInvTime, 14);
 
+            
             if (_btnRefresh != null) _btnRefresh.Click += (s, ev) => Reload();
             if (_dgInvoices != null) _dgInvoices.SelectionChanged += DgInvoices_SelectionChanged;
 

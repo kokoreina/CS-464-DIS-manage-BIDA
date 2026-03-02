@@ -108,6 +108,11 @@ namespace Dash_boardsBIDA
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Đăng xuất!");
+            var login = new LoginWindow();
+            login.Show();
+
+            // đóng main
+            this.Close();
             // Nếu em muốn quay lại LoginWindow:
             // new LoginWindow().Show();
             // this.Close();
@@ -117,6 +122,8 @@ namespace Dash_boardsBIDA
         public void UpdateTableName(string tableName, string type)
         {
             if (string.IsNullOrWhiteSpace(tableName)) return;
+
+            tableName = tableName.Trim();
 
             CurrentTable = tableName;
             if (TxtSelectedTable != null) TxtSelectedTable.Text = tableName;
@@ -147,7 +154,7 @@ namespace Dash_boardsBIDA
             _menuFoods.Clear();
 
             // "Giờ chơi" dùng để mở bàn + tính phí mở bàn 30 phút
-            _menuFoods.Add(new Food { Name = "Giờ chơi", Price = 0, Image = "Images/so9.png" });
+            _menuFoods.Add(new Food { Name = "Giờ chơi", Price = 50000, Image = "Images/so9.png" });
 
             _menuFoods.Add(new Food { Name = "Coca", Price = 10000, Image = "Images/coca.png" });
             _menuFoods.Add(new Food { Name = "Pepsi", Price = 10000, Image = "Images/pepsi.png" });
@@ -302,7 +309,21 @@ namespace Dash_boardsBIDA
             paused = s.IsPaused;
             playTime = s.GetPlayTime();
         }
+        public bool HasPendingPayment(string tableName)
+        {
+            if (string.IsNullOrWhiteSpace(tableName)) return false;
+            tableName = tableName.Trim();
 
+            // 1) Nếu bàn đã mở/đã start -> coi như pending (chưa thanh toán/xóa)
+            if (_sessions.ContainsKey(tableName) && _sessions[tableName].HasStarted)
+                return true;
+
+            // 2) Nếu bàn đã có order item (kể cả "Giờ chơi") -> pending
+            if (_tableOrders.ContainsKey(tableName) && _tableOrders[tableName].Count > 0)
+                return true;
+
+            return false;
+        }
         private void StopTableNow(string tableName)
         {
             if (!_sessions.ContainsKey(tableName)) return;

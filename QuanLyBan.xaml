@@ -6,8 +6,9 @@
     <Grid x:Name="TableGrid" Margin="15">
         <UniformGrid Columns="4">
 
-            <!-- 1-4: Pool -->
-            <Button Content="Bàn 1" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <!-- 1-5: Pool -->
+            <Button Content="Bàn 1&#10;POOL" Tag="Pool" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -18,7 +19,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 2" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 2&#10;POOL" Tag="Pool" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -29,7 +31,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 3" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 3&#10;POOL" Tag="Pool" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -40,7 +43,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 4" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 4&#10;POOL" Tag="Pool" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -51,8 +55,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <!-- 5-10: Libre -->
-            <Button Content="Bàn 5" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 5&#10;POOL" Tag="Pool" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -63,7 +67,9 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 6" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <!-- 6-10: Libre -->
+            <Button Content="Bàn 6&#10;LIBRE" Tag="Libre" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -74,7 +80,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 7" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 7&#10;LIBRE" Tag="Libre" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -85,7 +92,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 8" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 8&#10;LIBRE" Tag="Libre" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -96,7 +104,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 9" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 9&#10;LIBRE" Tag="Libre" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
@@ -107,7 +116,8 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bàn 10" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+            <Button Content="Bàn 10&#10;LIBRE" Tag="Libre" Click="Ban_Click" Margin="10" Height="130"
+                    FontSize="18" Background="LightGreen">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
