@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="Dash_boardsBIDA.QuanLyBan"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F4F6F8">
+
+    <Grid x:Name="TableGrid" Margin="15">
+        <UniformGrid Columns="4">
+
+            <!-- 1-4: Pool -->
+            <Button Content="Bàn 1" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 2" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 3" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 4" Tag="Pool" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <!-- 5-10: Libre -->
+            <Button Content="Bàn 5" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 6" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 7" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 8" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 9" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bàn 10" Tag="Libre" Click="Ban_Click" Margin="10" Height="130" FontSize="18" Background="LightGreen">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bắt đầu" Click="BatDau_Click"/>
+                        <MenuItem Header="Tạm dừng" Click="TamDung_Click"/>
+                        <MenuItem Header="Tiếp tục" Click="TiepTuc_Click"/>
+                        <MenuItem Header="Kết thúc" Click="KetThuc_Click"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+        </UniformGrid>
+    </Grid>
+</UserControl>
